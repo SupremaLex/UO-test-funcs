@@ -72,7 +72,8 @@ def NONDQUAR(n):
     sm_2 = lambda x: (x[n-1] + x[n]) ** 2
     sm = lambda x, i: sm_1(x, i) + sm_2(x)
     x0 = construct_x0([[1.0], [-1.0]], n)
-    return create_test_function(name, n, sm, x0, range_func=default_range, limits=(2, n - 1))
+    return create_test_function(name, n, sm, x0,
+                                first=f, range_func=default_range, limits=(2, n - 1))
 
 
 def DQDRTIC(n):
@@ -80,7 +81,8 @@ def DQDRTIC(n):
     c, d = 100, 100
     sm = lambda x, i: x[i] + c*x[i+1]**2 + d*x[i+2]**2
     x0 = np.ones((n, 1)) * 3.0
-    return create_test_function(name, n, sm, x0, range_func=default_range, limits=(2, n - 1))
+    return create_test_function(name, n, sm, x0,
+                                range_func=default_range, limits=(2, n - 1), min_dimesion=3)
 
 
 def EG2(n):
