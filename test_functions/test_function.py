@@ -1,4 +1,7 @@
 import sympy as sp
+import numpy as np
+import matplotlib.pyplot as plt
+import mpl_toolkits.mplot3d as plt3d
 from .support_funcs import default_range_2
 from .exceptions import MinDimensionError
 
@@ -33,6 +36,18 @@ class TestFunction:
 
     def lambdify(self):
         return sp.lambdify(self.variables, self.sympy_function)
+
+    def plot_surface_3d(self, x1, x2):
+        if self.dimension == 2:
+            fig = plt.figure(self.name)
+            ax = fig.gca(projection='3d')
+            X = x1
+            Y = x2
+            func = self.lambdify()
+            X, Y = np.meshgrid(X, Y)
+            Z = np.array([func(x, y) for x, y in zip(X.ravel(), Y.ravel())]).reshape(X.shape)
+            print(X.shape, Y.shape, Z.shape)
+            ax.plot_surface(X, Y, Z)
 
     @property
     def get_name(self):
