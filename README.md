@@ -90,3 +90,16 @@ Functions list:
     87. SINCOS function
     88. HIMMELBG function
     89. HIMMELH function
+    90. DIXMAANA
+    91. DIXMAANB
+    92. DIXMAANC
+    93. DIXMAAND
+    94. DIXMAANE
+    95. DIXMAANF
+    96. DIXMAANG
+    97. DIXMAANH
+    98. DIXMAANI
+    99. DIXMAANJ
+    100. DIXMAANK
+    101. DIXMAANL
+
