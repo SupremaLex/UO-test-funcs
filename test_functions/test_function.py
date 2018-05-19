@@ -35,7 +35,8 @@ class TestFunction:
         self.x0 = x0
 
     def lambdify(self):
-        return sp.lambdify(self.variables, self.sympy_function)
+        f = sp.lambdify(self.variables, self.sympy_function)
+        return lambda x: f(*x)
 
     def plot_surface_3d(self, x1, x2):
         if self.dimension == 2:
