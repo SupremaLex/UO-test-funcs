@@ -104,15 +104,6 @@ def CURLY20(n):
     return create_test_function(name, n, sm, x0, range_func=default_range_1)
 
 
-def DIXMAANA_DIXMAANL(n):
-    name = "DIXMAANA_DIXMAANL function (CUTE)"
-    f = lambda x: ...
-    sm_1 = lambda x, i: ...
-    sm_2 = lambda x, i: ...
-    sm = lambda x, i: sm_1(x, i) + sm_2(x, i)
-    x0 = np.ones((n, 1))
-    return create_test_function(name, n, sm, x0, range_func=default_range_3)
-
 
 def LIARWHD_1(n):
     name = "LIARWHD1 function (CUTE)"
