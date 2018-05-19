@@ -46,8 +46,9 @@ class TestFunction:
             func = self.lambdify()
             X, Y = np.meshgrid(X, Y)
             Z = np.array([func(x, y) for x, y in zip(X.ravel(), Y.ravel())]).reshape(X.shape)
-            print(X.shape, Y.shape, Z.shape)
             ax.plot_surface(X, Y, Z)
+        else:
+            print("The dimesion is too high for plotting")
 
     @property
     def get_name(self):
