@@ -1,0 +1,12 @@
+          Changelog
+          ---------
+
+UO-test-functions 1.0:
+ - first public release
+
+UO-test-functions 1.0.1:
+ - remove useless files from package
+
+UO-test-functions 1.0.2:
+ - add DIXMAAN functions implementation
+ - fix wrong function names in factory
