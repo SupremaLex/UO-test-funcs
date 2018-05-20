@@ -25,13 +25,13 @@ class TestFunction:
     So it consist of function variables, function form, default x0 and minimum dimension.
     You can lamdify
     """
-    def __init__(self, name, variables, function, x0, min_dimesion):
-        if len(variables) < min_dimesion:
-            raise MinDimensionError(len(variables))
+    def __init__(self, name, function, x0, min_dimesion):
+        self.variables = function.free_symbols
+        self.dimension = len(self.variables)
+        if self.dimension < min_dimesion:
+            raise MinDimensionError(min_dimesion, self.dimension)
         self.name = name
-        self.variables = variables
         self.sympy_function = function
-        self.dimension = len(variables)
         self.x0 = x0
 
     def lambdify(self):
@@ -46,7 +46,7 @@ class TestFunction:
             Y = x2
             func = self.lambdify()
             X, Y = np.meshgrid(X, Y)
-            Z = np.array([func(x, y) for x, y in zip(X.ravel(), Y.ravel())]).reshape(X.shape)
+            Z = np.array([func((x, y)) for x, y in zip(X.ravel(), Y.ravel())]).reshape(X.shape)
             ax.plot_surface(X, Y, Z)
         else:
             print("The dimesion is too high for plotting")
@@ -79,32 +79,12 @@ class TestFunction:
         return result.format(self=self)
 
 
-class FunctionSeries:
-    """
-    FunctionSeries is class-functor. Often test function fo UO is represented as a series.
-    This class create a sympy function based on the member of series and  it's range
-    """
-    class ListFrom1(list):
-        """ListFrom1 is just a default python list but it's index must be in range [1, n]"""
-        def __init__(self, lst):
-            super().__init__(lst)
+def xi(i):
+    return sp.Symbol('x%i' % i)
 
-        def __getitem__(self, item):
-            if item < 1 or item > super().__len__():
-                raise IndexError("list index out of range")
-            return super().__getitem__(item - 1)
 
-    def __init__(self, member, n, series_range):
-        self.member = member
-        self.n = n
-        self.range = series_range
-
-    def __call__(self, *args, **kwargs):
-        x = self.ListFrom1(sp.symbols(' '.join(['x' + str(i) for i in range(1, self.n + 1)])))
-        if isinstance(x, sp.Symbol):
-            x = [x]
-        func = sum([self.member(x, i) for i in self.range])
-        return x, func
+def summation(series_member, series_range):
+    return sum([series_member(i) for i in series_range])
 
 
 def create_test_function(name, n, series_member, x0,
@@ -114,10 +94,10 @@ def create_test_function(name, n, series_member, x0,
         series_range = range_func(*limits)
     else:
         series_range = range_func(n)
-    variables, func = FunctionSeries(series_member, n, series_range)()
+    func = summation(series_member, series_range)
     if first:
-        func += first(variables)
-    return TestFunction(name, variables, func, x0, min_dimesion)
+        func += first()
+    return TestFunction(name, func, x0, min_dimesion)
 
 
 

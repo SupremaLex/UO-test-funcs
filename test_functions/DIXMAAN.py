@@ -21,14 +21,14 @@ def DIXMAAN(type):
         name = "DIXMAAN%c function (CUTE)" % type
         alpha, beta, gamma, sigma, k1, k2, k3, k4 = table_DIXMAAN[type]
         m = n // 3
-        sm = lambda x, i: alpha * x[i] ** 2 *(i / n) ** k1
-        sm2 = lambda x, i: beta * x[i] ** 2 * (x[i+1] + x[i+1]**2) * (i / n) ** k2
-        sm3 = lambda x, i: gamma * x[i]**2 * x[i+m] ** 4 * (i / n) ** k3
-        sm4 = lambda x, i: sigma * x[i] * x[i+2*m] * (i / n) ** k4
-        f_1 = lambda x: sum([sm2(x, i) for i in range(1, n)])
-        f_2 = lambda x: sum([sm3(x, i) for i in range(1, 2 * m + 1)])
-        f_3 = lambda x: sum([sm4(x, i) for i in range(1, m + 1)])
-        f = lambda x: 1 + f_1(x) + f_2(x) + f_3(x)
+        sm = lambda i: alpha * xi(i) ** 2 *(i / n) ** k1
+        sm2 = lambda i: beta * xi(i) ** 2 * (xi(i+1) + xi(i+1)**2) * (i / n) ** k2
+        sm3 = lambda i: gamma * xi(i)**2 * xi(i+m) ** 4 * (i / n) ** k3
+        sm4 = lambda i: sigma * xi(i) * xi(i+2*m) * (i / n) ** k4
+        f_1 = lambda: sum([sm2(i) for i in range(1, n)])
+        f_2 = lambda: sum([sm3(i) for i in range(1, 2 * m + 1)])
+        f_3 = lambda: sum([sm4(i) for i in range(1, m + 1)])
+        f = lambda: 1 + f_1() + f_2() + f_3()
         x0 = np.ones((n, 1)) * 2.0
         return create_test_function(name, n, sm, x0, first=f, range_func=default_range_1)
     DIXMAAN_.__name__ += type
