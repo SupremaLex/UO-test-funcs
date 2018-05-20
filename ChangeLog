@@ -10,3 +10,12 @@ UO-test-functions 1.0.1:
 UO-test-functions 1.0.2:
  - add DIXMAAN functions implementation
  - fix wrong function names in factory
+
+UO-test-functions 1.0.2a0
+ - lamdify method of TestFunction now return a scipy.optimize.minimize compatible lambda function
+
+UO-test-functions 1.0.3
+
+ - Remove FunctionSeries class
+ - Now TestFunction class get variables from sympy function
+ - Don't use an array of symbols
